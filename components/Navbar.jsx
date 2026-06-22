@@ -1,140 +1,65 @@
-// import Link from "next/link";
-// export default function Navbar() {
-//   return (
-//     <nav className="bg-green-700 text-white px-6 py-4 shadow-md">
-//       <div className="flex flex-col md:flex-row md:justify-between md:items-center">
+"use client";
 
-//         {/* Logo */}
-//         <div className="flex justify-between items-center">
-//           <h1 className="text-2xl font-bold">
-//             AIgri 🌱
-//           </h1>
-
-//           <button className="bg-white text-green-700 px-3 py-2 rounded-full font-semibold md:hidden">
-//             👤
-//           </button>
-//         </div>
-
-//         {/* Navigation Links */}
-//         <ul className="flex flex-col md:flex-row gap-4 mt-4 md:mt-0 text-center">
-//           <li className="hover:text-yellow-300 cursor-pointer">Home</li>
-//           <li className="hover:text-yellow-300 cursor-pointer">About</li>
-//           <li className="hover:text-yellow-300 cursor-pointer">Dashboard</li>
-//           <li className="hover:text-yellow-300 cursor-pointer">Login</li>
-//         </ul>
-
-//         {/* Desktop Profile Button */}
-//         <button className="hidden md:block bg-white text-green-700 px-3 py-2 rounded-full font-semibold">
-//           👤
-//         </button>
-//       </div>
-//     </nav>
-//   );
-// }
-// import Link from "next/link";
-
-// export default function Navbar() {
-//   return (
-//     <nav className="bg-green-700 text-white px-6 py-4 shadow-md">
-//       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:justify-between md:items-center">
-
-//         {/* Logo */}
-//         <Link href="/">
-//           <h1 className="text-3xl font-bold cursor-pointer text-center md:text-left">
-//             AIgri 🌱
-//           </h1>
-//         </Link>
-
-//         {/* Navigation Links */}
-//         <ul className="flex flex-col md:flex-row gap-4 mt-4 md:mt-0 text-center">
-//           <li>
-//             <Link href="/" className="hover:text-yellow-300">
-//               Home
-//             </Link>
-//           </li>
-
-//           <li>
-//             <Link href="/about" className="hover:text-yellow-300">
-//               About
-//             </Link>
-//           </li>
-
-//           <li>
-//             <Link href="/dashboard" className="hover:text-yellow-300">
-//               Dashboard
-//             </Link>
-//           </li>
-
-//           <li>
-//             <Link href="/login" className="hover:text-yellow-300">
-//               Login
-//             </Link>
-//           </li>
-//         </ul>
-
-//         {/* Profile Icon */}
-//         <button className="bg-white text-green-700 px-3 py-2 rounded-full font-semibold mt-4 md:mt-0 self-center md:self-auto">
-//           👤
-//         </button>
-
-//       </div>
-//     </nav>
-//   );
-// }
 import Link from "next/link";
+import { useTheme } from "./ThemeProvider";
 
 export default function Navbar() {
+  const { theme, toggleTheme } = useTheme();
+
   return (
-    <nav className="bg-green-700 text-white px-4 py-4 shadow-md">
+    <nav className="sticky top-0 z-50 bg-green-700/95 dark:bg-gray-900/95 backdrop-blur-md text-white px-4 py-4 shadow-md">
       <div className="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-4">
 
-        {/* Logo */}
         <Link href="/">
-          <h1 className="text-3xl font-bold cursor-pointer">
+          <h1 className="text-3xl font-bold cursor-pointer tracking-tight hover:opacity-90 transition-opacity">
             AIgri 🌱
           </h1>
         </Link>
 
-        {/* Navigation Links */}
-        <ul className="flex flex-wrap justify-center gap-6 text-lg">
+        <ul className="flex flex-wrap justify-center gap-6 text-base font-medium">
           <li>
-            <Link href="/" className="hover:text-yellow-300 transition">
+            <Link href="/" className="hover:text-yellow-300 transition-colors duration-200 pb-0.5 border-b-2 border-transparent hover:border-yellow-300">
               Home
             </Link>
           </li>
 
           <li>
-            <Link
-              href="/about"
-              className="hover:text-yellow-300 transition"
-            >
+            <Link href="/about" className="hover:text-yellow-300 transition-colors duration-200 pb-0.5 border-b-2 border-transparent hover:border-yellow-300">
               About
             </Link>
           </li>
 
           <li>
-            <Link
-              href="/dashboard"
-              className="hover:text-yellow-300 transition"
-            >
+            <Link href="/dashboard" className="hover:text-yellow-300 transition-colors duration-200 pb-0.5 border-b-2 border-transparent hover:border-yellow-300">
               Dashboard
             </Link>
           </li>
 
           <li>
-            <Link
-              href="/login"
-              className="hover:text-yellow-300 transition"
-            >
+            <Link href="/login" className="hover:text-yellow-300 transition-colors duration-200 pb-0.5 border-b-2 border-transparent hover:border-yellow-300">
               Login
             </Link>
           </li>
         </ul>
 
-        {/* Profile Icon */}
-        <button className="bg-white text-green-700 px-3 py-2 rounded-full font-semibold hover:bg-gray-200 transition">
-          👤
-        </button>
+        <div className="flex gap-3">
+
+          <button
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            className="cursor-pointer bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-full transition-all duration-200 text-lg"
+          >
+            {theme === "dark" ? "☀️" : "🌙"}
+          </button>
+
+          <button
+            aria-label="User profile"
+            className="cursor-pointer bg-white text-green-700 px-3 py-2 rounded-full hover:bg-gray-100 transition-colors duration-200 font-medium text-lg"
+          >
+            👤
+          </button>
+
+        </div>
 
       </div>
     </nav>

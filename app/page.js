@@ -81,29 +81,42 @@ import Footer from "../components/Footer";
 
 export default function Home() {
   return (
-    <div>
+    <div className="min-h-screen bg-green-50/20 dark:bg-gray-900 transition-colors duration-300">
       <Navbar />
 
       <Hero />
 
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 p-10 bg-gray-100">
-        <Card
-          title="Disease Detection"
-          description="Upload crop images and detect diseases instantly using AI."
-          image="https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
-        />
+      <section className="bg-gray-50/50 dark:bg-gray-800/40 py-16 px-6 md:px-12 border-t border-gray-100 dark:border-gray-800">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
+              Our Core Features
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-500 dark:text-gray-400">
+              Explore advanced agricultural tools built with state-of-the-art AI to supercharge your harvests.
+            </p>
+          </div>
 
-        <Card
-          title="Voice Assistant"
-          description="Interact with the platform using voice commands in regional languages."
-          image="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8"
-        />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <Card
+              title="Disease Detection"
+              description="Upload crop images and detect diseases instantly using AI."
+              image="https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+            />
 
-        <Card
-          title="Crop Recommendation"
-          description="Receive personalized crop suggestions based on soil and weather conditions."
-          image="https://images.unsplash.com/photo-1464226184884-fa280b87c399"
-        />
+            <Card
+              title="Voice Assistant"
+              description="Interact with the platform using voice commands in regional languages."
+              image="https://images.unsplash.com/photo-1523741543316-beb7fc7023d8"
+            />
+
+            <Card
+              title="Crop Recommendation"
+              description="Receive personalized crop suggestions based on soil and weather conditions."
+              image="https://images.unsplash.com/photo-1464226184884-fa280b87c399"
+            />
+          </div>
+        </div>
       </section>
 
       <Footer />
