@@ -69,7 +69,10 @@ http://localhost:3000
 
 ## Screenshots
 
-(Add screenshots here if required)
+<img width="1901" height="988" alt="image" src="https://github.com/user-attachments/assets/fcdcd8f8-0e04-4916-8d79-5bbb0ab33b14" />
+<img width="1918" height="987" alt="image" src="https://github.com/user-attachments/assets/0e906f19-5b6f-46c3-a1bb-27b285687551" />
+<img width="1896" height="986" alt="image" src="https://github.com/user-attachments/assets/7bb74704-e68b-4336-8041-b433060e8b42" />
+
 
 ## Future Improvements
 
