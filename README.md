@@ -1,87 +1,83 @@
-# 🌱 AgriAI
+# AIgri 🌱
 
-AgriAI is an AI-powered smart farming assistant designed to help farmers make informed decisions through intelligent recommendations and interactive assistance.
+AIgri is an AI-powered agricultural assistant designed to help farmers make smarter farming decisions through modern technology.
 
-## 🚀 Features
+## Features
 
-* 🏠 Responsive Home Page
-* 🧭 Responsive Navigation Bar
-* 🌾 AI-focused Hero Section
-* 🃏 Reusable Card Components
-* 📄 About Page
-* 📊 Dashboard Page
-* 🔐 Modern Login Page
-* 📱 Mobile-Friendly Design
-* 🎨 Built using Tailwind CSS
+- 🌾 Smart Crop Recommendations
+- 📸 Crop Disease Detection
+- 🎤 Voice-based Interaction
+- 🌙 Dark/Light Theme Support
+- 📱 Fully Responsive Design
+- 🧩 Reusable UI Components
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-* **Frontend:** Next.js 16
-* **Styling:** Tailwind CSS
-* **Language:** JavaScript
-* **Routing:** Next.js App Router
+- Next.js 16
+- React
+- Tailwind CSS v4
+- JavaScript
+- React Hot Toast
 
-## 📂 Project Structure
+## Pages
 
-```bash
-app/
-├── page.js
-├── about/
-├── dashboard/
-├── login/
+- Home
+- About
+- Dashboard
+- Login
+- Components Demo
 
-components/
-├── Navbar.jsx
-├── Hero.jsx
-├── Card.jsx
-├── Footer.jsx
+## UI Components
 
-public/
-├── login-hero.jpg
-```
+- Button
+- Input
+- Modal
+- Loader
+- Toast
 
-## ⚙️ Installation
+## Installation
 
-1. Clone the repository:
+Clone the repository:
 
 ```bash
 git clone https://github.com/CoderShreya16/AIgri.git
 ```
 
-2. Navigate to the project directory:
+Move into the project folder:
 
 ```bash
 cd AIgri
 ```
 
-3. Install dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-4. Run the development server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-5. Open your browser and visit:
+Open:
 
-```bash
+```text
 http://localhost:3000
 ```
 
-## 🎯 Future Enhancements
+## Screenshots
 
-* AI chatbot integration
-* Crop disease detection using images
-* Voice-based interaction
-* Multilingual support
-* Farmer recommendation system
+(Add screenshots here if required)
 
-## 👩‍💻 Developed By
+## Future Improvements
+
+- Real-time AI chatbot integration
+- Crop disease prediction using machine learning
+- Weather forecasting integration
+- Multilingual voice support
+
+## Author
 
 **Shreya**
-
-As part of the **AI-Assisted Full Stack Web Development Internship Program**.
