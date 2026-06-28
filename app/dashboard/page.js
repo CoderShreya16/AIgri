@@ -1,7 +1,35 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import Loader from "../../components/ui/Loader";
 
 export default function Dashboard() {
+  const [crops, setCrops] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch crop data from the backend API
+  useEffect(() => {
+    const fetchCrops = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/api/crops");
+        if (!response.ok) {
+          throw new Error("Failed to fetch crop data. Backend might be down.");
+        }
+        const data = await response.json();
+        setCrops(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCrops();
+  }, []);
+
   return (
     <div className="min-h-screen flex flex-col bg-green-50/10 dark:bg-gray-900 transition-colors duration-300">
       <Navbar />
@@ -15,167 +43,57 @@ export default function Dashboard() {
             Welcome Back, Farmer 👋
           </h1>
 
-          <p className="mt-3 text-base md:text-lg text-green-100/90 dark:text-gray-300 max-w-xl">
-            Here's your farm overview powered by AgriAI.
-          </p>
 
-          <button className="mt-6 bg-white dark:bg-gray-100 text-green-800 font-semibold px-6 py-3 rounded-xl hover:scale-105 active:scale-95 hover:shadow-lg transition cursor-pointer">
-            Scan Crop Disease 🌾
-          </button>
-        </section>
-
-        {/* Stats */}
-        <section className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-10">
-
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 hover:border-green-200 dark:hover:border-green-800/40 transition-all duration-300">
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Crop Health</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-green-700 dark:text-green-400 mt-2">
-              92%
-            </h2>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 hover:border-red-200 dark:hover:border-red-900/30 transition-all duration-300">
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Diseases Detected</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-red-500 mt-2">
-              18
-            </h2>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 hover:border-blue-200 dark:hover:border-blue-900/30 transition-all duration-300">
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">AI Recommendations</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-500 mt-2">
-              24
-            </h2>
-          </div>
-
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 hover:border-yellow-200 dark:hover:border-yellow-900/30 transition-all duration-300">
-            <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Notifications</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 mt-2">
-              5
-            </h2>
-          </div>
 
         </section>
 
-        {/* Middle Section */}
-        <section className="grid lg:grid-cols-3 gap-8 mt-10">
-
-          {/* Recent Activity */}
-          <div className="lg:col-span-2 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6">
-            <h2 className="text-xl font-bold text-green-800 dark:text-green-400 mb-5">
-              Recent AI Activity
-            </h2>
-
-            <div className="space-y-4">
-
-              <div className="border-l-4 border-green-600 pl-4 py-1">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base">
-                  Tomato Leaf Analysis
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Early Blight detected with 94% confidence.
-                </p>
-              </div>
-
-              <div className="border-l-4 border-yellow-500 pl-4 py-1">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base">
-                  Soil Recommendation
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Nitrogen level is low. Fertilizer suggested.
-                </p>
-              </div>
-
-              <div className="border-l-4 border-blue-500 pl-4 py-1">
-                <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-base">
-                  Weather Alert
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Heavy rainfall expected tomorrow.
-                </p>
-              </div>
-
-            </div>
-          </div>
-
-          {/* Weather Widget */}
-          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6">
-            <h2 className="text-xl font-bold text-green-800 dark:text-green-400 mb-5">
-              Today's Weather 🌤️
-            </h2>
-
-            <div className="flex items-baseline gap-2">
-              <span className="text-5xl font-extrabold tracking-tight text-gray-900 dark:text-white">28°C</span>
-              <span className="text-sm text-gray-500">Sunny</span>
-            </div>
-
-            <p className="mt-3 text-sm font-medium text-gray-600 dark:text-gray-400">
-              Dehradun, Uttarakhand
-            </p>
-
-            <div className="mt-6 space-y-3 text-sm text-gray-700 dark:text-gray-300 border-t border-gray-50 dark:border-gray-700/40 pt-4">
-              <div className="flex justify-between">
-                <span className="text-gray-500">Humidity</span>
-                <span className="font-medium">65%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Wind</span>
-                <span className="font-medium">12 km/h</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-500">Rain Chance</span>
-                <span className="font-medium">30%</span>
-              </div>
-            </div>
-          </div>
-
-        </section>
-
-        {/* Table */}
-        <section className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 p-6 mt-10 overflow-x-auto">
-
-          <h2 className="text-xl font-bold text-green-800 dark:text-green-400 mb-5">
-            Recent Crop Scans
+        {/* Live Backend Data Section */}
+        <section className="mt-12 bg-white/50 dark:bg-gray-800/30 p-8 rounded-3xl border border-gray-100 dark:border-gray-700/50">
+          <h2 className="text-2xl font-bold text-green-800 dark:text-green-400 mb-6 flex items-center gap-2">
+            Live Crop Data from Backend 🌱
           </h2>
 
-          <table className="w-full text-sm">
+          {loading ? (
+            <Loader />
+          ) : error ? (
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 p-4 rounded-xl flex items-start gap-3">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="font-bold">Error Loading Data</p>
+                <p className="text-sm mt-1">{error}</p>
+                <p className="text-sm mt-1 opacity-80">Make sure your backend server is running on http://localhost:5000</p>
+              </div>
+            </div>
+          ) : crops.length === 0 ? (
+            <div className="text-gray-500 dark:text-gray-400 p-4 text-center">No crops found in the backend.</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {crops.map((crop) => (
+                <div key={crop.id} className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700/50 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-extrabold text-gray-900 dark:text-white group-hover:text-green-700 dark:group-hover:text-green-400 transition-colors">{crop.name}</h3>
+                    <span className="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs px-2.5 py-0.5 rounded-full font-medium border border-green-200 dark:border-green-800/50">
+                      ID: {crop.id}
+                    </span>
+                  </div>
 
-            <thead>
-              <tr className="border-b border-gray-100 dark:border-gray-700 text-left text-gray-400 dark:text-gray-500 font-semibold">
-                <th className="pb-3">Crop</th>
-                <th className="pb-3">Disease</th>
-                <th className="pb-3">Status</th>
-                <th className="pb-3">Date</th>
-              </tr>
-            </thead>
+                  <div className="space-y-3">
+                    <div className="flex items-center text-sm">
+                      <span className="w-20 text-gray-500 dark:text-gray-400 font-medium">Season:</span>
+                      <span className="font-semibold text-gray-800 dark:text-gray-200 bg-gray-50 dark:bg-gray-700/50 px-2 py-1 rounded-md">{crop.season}</span>
+                    </div>
 
-            <tbody className="divide-y divide-gray-50 dark:divide-gray-700/45">
-
-              <tr className="hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-colors">
-                <td className="py-3.5 font-medium text-gray-900 dark:text-gray-100">Tomato</td>
-                <td className="py-3.5 text-gray-600 dark:text-gray-400">Early Blight</td>
-                <td className="py-3.5 font-semibold text-red-500">Detected</td>
-                <td className="py-3.5 text-gray-500 dark:text-gray-400">21 Jun 2026</td>
-              </tr>
-
-              <tr className="hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-colors">
-                <td className="py-3.5 font-medium text-gray-900 dark:text-gray-100">Potato</td>
-                <td className="py-3.5 text-gray-600 dark:text-gray-400">Healthy</td>
-                <td className="py-3.5 font-semibold text-green-600 dark:text-green-400">Safe</td>
-                <td className="py-3.5 text-gray-500 dark:text-gray-400">20 Jun 2026</td>
-              </tr>
-
-              <tr className="hover:bg-gray-50/50 dark:hover:bg-gray-700/20 transition-colors">
-                <td className="py-3.5 font-medium text-gray-900 dark:text-gray-100">Wheat</td>
-                <td className="py-3.5 text-gray-600 dark:text-gray-400">Rust Disease</td>
-                <td className="py-3.5 font-semibold text-yellow-500">Moderate</td>
-                <td className="py-3.5 text-gray-500 dark:text-gray-400">19 Jun 2026</td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
+                    <div className="flex items-center text-sm">
+                      <span className="w-20 text-gray-500 dark:text-gray-400 font-medium">Disease:</span>
+                      <span className="font-semibold text-gray-800 dark:text-gray-200 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-md border border-red-100 dark:border-red-900/30">{crop.disease}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
 
       </main>
