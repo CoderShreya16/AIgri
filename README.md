@@ -1,86 +1,207 @@
-# AIgri 🌱
+# 🌱 AIgri
 
-AIgri is an AI-powered agricultural assistant designed to help farmers make smarter farming decisions through modern technology.
+AIgri is an AI-powered smart agriculture platform designed to assist farmers with crop management, disease detection, and intelligent farming recommendations. The platform combines a modern frontend with a robust backend API to deliver real-time agricultural insights.
 
-## Features
+## 🚀 Features
 
-- 🌾 Smart Crop Recommendations
-- 📸 Crop Disease Detection
-- 🎤 Voice-based Interaction
-- 🌙 Dark/Light Theme Support
-- 📱 Fully Responsive Design
-- 🧩 Reusable UI Components
+* 🌾 Crop Recommendation System
+* 📸 Crop Disease Detection
+* 🎤 Voice Assistant Support
+* 🌙 Dark/Light Mode Toggle
+* 📱 Fully Responsive Design
+* 🧩 Reusable UI Component Library
+* 🔗 Frontend-Backend Integration
+* 📡 REST API for Crop Management
 
-## Tech Stack
+---
 
-- Next.js 16
-- React
-- Tailwind CSS v4
-- JavaScript
-- React Hot Toast
+## 🛠️ Tech Stack
 
-## Pages
+### Frontend
 
-- Home
-- About
-- Dashboard
-- Login
-- Components Demo
+* Next.js 16
+* React.js
+* Tailwind CSS v4
 
-## UI Components
+### Backend
 
-- Button
-- Input
-- Modal
-- Loader
-- Toast
+* Node.js
+* Express.js
 
-## Installation
+### Development Tools
 
-Clone the repository:
+* Thunder Client
+* Git & GitHub
+* Figma
+
+---
+
+## 📂 Project Structure
+
+```bash
+AIgri/
+│
+├── app/                     # Next.js App Router pages
+├── components/             # Shared components
+│   ├── ui/                 # Reusable UI components
+│   │   ├── Button.jsx
+│   │   ├── Input.jsx
+│   │   ├── Modal.jsx
+│   │   ├── Toast.jsx
+│   │   └── Loader.jsx
+│   └── ThemeProvider.jsx
+│
+├── backend/
+│   ├── controllers/
+│   ├── routes/
+│   ├── middleware/
+│   ├── data/
+│   └── server.js
+│
+├── public/
+└── README.md
+```
+
+## 🎨 UI Features
+
+* Responsive layout for Mobile, Tablet, and Desktop
+* Professional dashboard interface
+* Dark and Light theme support
+* Reusable component architecture
+* Modern and accessible design
+
+---
+
+## 🔌 API Endpoints
+
+### Get all crops
+
+```http
+GET /api/crops
+```
+
+### Get crop by ID
+
+```http
+GET /api/crops/:id
+```
+
+### Search crops
+
+```http
+GET /api/crops/search?q=rice
+```
+
+### Add new crop
+
+```http
+POST /api/crops
+```
+
+### Update crop
+
+```http
+PUT /api/crops/:id
+```
+
+### Delete crop
+
+```http
+DELETE /api/crops/:id
+```
+
+---
+
+## ⚙️ Installation and Setup
+
+### Clone the repository
 
 ```bash
 git clone https://github.com/CoderShreya16/AIgri.git
 ```
 
-Move into the project folder:
+### Navigate to the project folder
 
 ```bash
 cd AIgri
 ```
 
-Install dependencies:
+### Install frontend dependencies
 
 ```bash
 npm install
 ```
 
-Start the development server:
+### Install backend dependencies
+
+```bash
+cd backend
+npm install
+```
+
+---
+
+## ▶️ Running the Application
+
+### Start Backend Server
+
+```bash
+cd backend
+npm run dev
+```
+
+Backend runs on:
+
+```bash
+http://localhost:5000
+```
+
+### Start Frontend
+
+Open another terminal:
 
 ```bash
 npm run dev
 ```
 
-Open:
+Frontend runs on:
 
-```text
+```bash
 http://localhost:3000
 ```
 
-## Screenshots
+---
 
-<img width="1901" height="988" alt="image" src="https://github.com/user-attachments/assets/fcdcd8f8-0e04-4916-8d79-5bbb0ab33b14" />
-<img width="1918" height="987" alt="image" src="https://github.com/user-attachments/assets/0e906f19-5b6f-46c3-a1bb-27b285687551" />
-<img width="1896" height="986" alt="image" src="https://github.com/user-attachments/assets/7bb74704-e68b-4336-8041-b433060e8b42" />
+## 🧪 API Testing
 
+API endpoints were tested using Thunder Client.
 
-## Future Improvements
+Example:
 
-- Real-time AI chatbot integration
-- Crop disease prediction using machine learning
-- Weather forecasting integration
-- Multilingual voice support
+```http
+GET http://localhost:5000/api/crops
+```
 
-## Author
+---
+
+## 🔮 Future Enhancements
+
+* AI-based disease prediction
+* Real-time weather integration
+* User authentication
+* Database integration (MongoDB/Supabase)
+* Multilingual support
+* Voice-based farming assistance
+
+---
+
+## 👩‍💻 Developed By
 
 **Shreya**
+AI-Assisted Full Stack Web Development Internship Project
+
+---
+
+## 📄 License
+
+This project is developed for educational and internship purposes.
