@@ -1,91 +1,121 @@
-let crops = require('../data/crops');
+const Crop = require('../models/Crop');
 
 // @desc    Get all crops
 // @route   GET /api/crops
 // @access  Public
-const getCrops = (req, res) => {
-  res.status(200).json(crops);
+const getCrops = async (req, res, next) => {
+  try {
+    const crops = await Crop.find();
+    res.status(200).json(crops);
+  } catch (error) {
+    next(error);
+  }
 };
 
 // @desc    Get single crop by ID
 // @route   GET /api/crops/:id
 // @access  Public
-const getCropById = (req, res) => {
-  const crop = crops.find(c => c.id === parseInt(req.params.id));
-  if (crop) {
+const getCropById = async (req, res, next) => {
+  try {
+    const crop = await Crop.findById(req.params.id);
+    if (!crop) {
+      res.status(404);
+      return next(new Error('Crop not found'));
+    }
     res.status(200).json(crop);
-  } else {
-    res.status(404);
-    throw new Error('Crop not found');
+  } catch (error) {
+    // Invalid ObjectId format → treat as 404
+    if (error.name === 'CastError') {
+      res.status(404);
+      return next(new Error('Crop not found'));
+    }
+    next(error);
   }
 };
 
 // @desc    Create a new crop
 // @route   POST /api/crops
 // @access  Public
-const createCrop = (req, res) => {
-  const { name, season, disease } = req.body;
-  if (!name || !season || !disease) {
-    res.status(400);
-    throw new Error('Please include all fields');
-  }
+const createCrop = async (req, res, next) => {
+  try {
+    const { name, season, disease } = req.body;
+    if (!name || !season || !disease) {
+      res.status(400);
+      return next(new Error('Please include all fields'));
+    }
 
-  const newCrop = {
-    id: crops.length > 0 ? crops[crops.length - 1].id + 1 : 1,
-    name,
-    season,
-    disease
-  };
-  crops.push(newCrop);
-  res.status(201).json(newCrop);
+    const crop = await Crop.create({ name, season, disease });
+    res.status(201).json(crop);
+  } catch (error) {
+    next(error);
+  }
 };
 
 // @desc    Update an existing crop
 // @route   PUT /api/crops/:id
 // @access  Public
-const updateCrop = (req, res) => {
-  const crop = crops.find(c => c.id === parseInt(req.params.id));
-  
-  if (!crop) {
-    res.status(404);
-    throw new Error('Crop not found');
+const updateCrop = async (req, res, next) => {
+  try {
+    const crop = await Crop.findById(req.params.id);
+    if (!crop) {
+      res.status(404);
+      return next(new Error('Crop not found'));
+    }
+
+    const { name, season, disease } = req.body;
+    crop.name    = name    ?? crop.name;
+    crop.season  = season  ?? crop.season;
+    crop.disease = disease ?? crop.disease;
+
+    const updated = await crop.save();
+    res.status(200).json(updated);
+  } catch (error) {
+    if (error.name === 'CastError') {
+      res.status(404);
+      return next(new Error('Crop not found'));
+    }
+    next(error);
   }
-
-  const { name, season, disease } = req.body;
-  
-  crop.name = name || crop.name;
-  crop.season = season || crop.season;
-  crop.disease = disease || crop.disease;
-
-  res.status(200).json(crop);
 };
 
 // @desc    Delete a crop
 // @route   DELETE /api/crops/:id
 // @access  Public
-const deleteCrop = (req, res) => {
-  const cropIndex = crops.findIndex(c => c.id === parseInt(req.params.id));
-
-  if (cropIndex === -1) {
-    res.status(404);
-    throw new Error('Crop not found');
+const deleteCrop = async (req, res, next) => {
+  try {
+    const crop = await Crop.findByIdAndDelete(req.params.id);
+    if (!crop) {
+      res.status(404);
+      return next(new Error('Crop not found'));
+    }
+    res.status(204).send();
+  } catch (error) {
+    if (error.name === 'CastError') {
+      res.status(404);
+      return next(new Error('Crop not found'));
+    }
+    next(error);
   }
-
-  crops.splice(cropIndex, 1);
-  res.status(204).send();
 };
 
 // @desc    Search crops by name
 // @route   GET /api/crops/search?q=value
 // @access  Public
-const searchCrops = (req, res) => {
-  const q = req.query.q;
-  if (!q) {
-    res.status(400);
-    throw new Error('Search query is required');
+const searchCrops = async (req, res, next) => {
+  try {
+    const q = req.query.q;
+    if (!q) {
+      res.status(400);
+      return next(new Error('Search query is required'));
+    }
+
+    const crops = await Crop.find({
+      name: { $regex: q, $options: 'i' },
+    });
+    res.status(200).json(crops);
+  } catch (error) {
+    next(error);
   }
-  const filteredCrops = crops.filter(c => c.name.toLowerCase().includes(q.toLowerCase()));
-  res.status(200).json(filteredCrops);
 };
 
 module.exports = {
@@ -94,5 +124,5 @@ module.exports = {
   createCrop,
   updateCrop,
   deleteCrop,
-  searchCrops
+  searchCrops,
 };
