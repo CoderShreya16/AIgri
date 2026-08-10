@@ -1,11 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const passport = require('passport');
 const connectDB = require('./config/db');
 const cropRoutes = require('./routes/cropRoutes');
+const authRoutes = require('./routes/authRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 const { errorHandler, notFound } = require('./middleware/errorMiddleware');
 
 dotenv.config();
+
+// Passport config
+require('./config/passport');
 
 const app = express();
 
@@ -14,6 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/api/crops', cropRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/ai', aiRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

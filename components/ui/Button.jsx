@@ -14,6 +14,7 @@ export default function Button({
   disabled = false,
   onClick,
   className = "",
+  type = "button",
 }) {
   const variants = {
     primary:
@@ -32,6 +33,7 @@ export default function Button({
 
   return (
     <button
+      type={type}
       onClick={onClick}
       disabled={disabled}
       className={`

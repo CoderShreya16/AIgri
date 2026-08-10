@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Loader from "../../components/ui/Loader";
@@ -15,12 +16,24 @@ export default function Dashboard() {
   const [editingId, setEditingId] = useState(null);
   const [actionLoading, setActionLoading] = useState(false);
   const [actionMessage, setActionMessage] = useState(null);
+  const router = useRouter();
 
   // Fetch crop data from the backend API
   const fetchCrops = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/crops");
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const response = await fetch("http://localhost:5000/api/crops", {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          router.push("/login");
+          return;
+        }
         throw new Error("Failed to fetch crop data. Backend might be down.");
       }
       const data = await response.json();
@@ -33,8 +46,13 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    fetchCrops();
-  }, []);
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    } else {
+      fetchCrops();
+    }
+  }, [router]);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -48,9 +66,13 @@ export default function Dashboard() {
       const url = editingId ? `http://localhost:5000/api/crops/${editingId}` : 'http://localhost:5000/api/crops';
       const method = editingId ? 'PUT' : 'POST';
       
+      const token = localStorage.getItem("token");
       const response = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify(formData)
       });
       
@@ -86,7 +108,13 @@ export default function Dashboard() {
     if (!confirm('Are you sure you want to delete this crop?')) return;
     
     try {
-      const response = await fetch(`http://localhost:5000/api/crops/${id}`, { method: 'DELETE' });
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:5000/api/crops/${id}`, { 
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
       if (!response.ok) throw new Error('Failed to delete crop');
       
       setCrops(crops.filter(c => (c._id || c.id) !== id));
